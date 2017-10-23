@@ -1,0 +1,38 @@
+# B9S IN SCRIPT v0.4
+# version recent: 20171020
+# auteur: MeatRedHDb
+
+# Deblocage des permissions
+set ERRORMSG "Les permissions n'ont pas pu etre debloquer."
+allow S:/firm0.bin
+allow S:/firm1.bin
+allow 1:/
+
+# Verification des fichiers et dossiers
+set ERRORMSG "Le dossier bootstrap n'est pas dans votre carte sd"
+find 0:/boot9strap/boot9stra*.firm B9S
+set ERRORMSG "Failed"
+sha $[B9S] $[B9S].sha
+set ERRORMSG "Le fichier luma.firm n'est pas dans votre carte sd"
+find 0:/luma.firm LUMA
+set ERRORMSG "Le fichier boot.firm n'est pas dans votre carte sd"
+find 0:/boot.firm BOOT
+
+# Injecte b9s
+set ERRORMSG "L'injection de Boot9strap à échoué"
+cp -w -n $[B9S] S:/firm0.bin
+cp -w -n $[B9S] S:/firm1.bin
+
+# Supprime le GM9 et remplace par Luma3DS
+rm 0:/boot.firm
+mv 0:/luma.firm 0:/boot.firm
+cp -w -n 0:/boot.firm 1:/boot.firm
+cp -w -n 0:/luma/config.bin 1:/rw/luma/config.bin
+rm 0:/gm9/scripts/b9sinscript.gm9
+
+set SUCCESSMSG "Boot9Strap a bien etait installer."
+
+echo "Redemarrage votre 3ds"
+
+# boot Luma3DS
+boot 0:/boot.firm 
