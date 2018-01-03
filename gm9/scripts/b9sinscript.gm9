@@ -1,6 +1,17 @@
-# B9S IN SCRIPT v0.4
-# version recent: 20171020
-# auteur: MeatRedHDb
+# B9S IN SCRIPT v0.5
+# version recent: 20180103
+# auteur: MeatRedHD
+
+labelsel -o -s "Voulez-vous cree une backup total de votre console ?(Recommander)" backupmenu_*
+
+@backupmenu_Non
+goto resume_script
+
+@backupmenu_Oui
+findnot $[GM9OUT]/$[DATESTAMP]_$[SERIAL]_sysnand_???.bin OUTPATH
+cp -h S:/nand_minsize.bin $[OUTPATH]
+
+@resume_script
 
 # Deblocage des permissions
 set ERRORMSG "Les permissions n'ont pas pu etre debloquer."
@@ -19,7 +30,7 @@ set ERRORMSG "Le fichier boot.firm n'est pas dans votre carte sd"
 find 0:/boot.firm BOOT
 
 # Injecte b9s
-set ERRORMSG "L'injection de Boot9strap à échoué"
+set ERRORMSG "L'injection de Boot9strap a echoué"
 cp -w -n $[B9S] S:/firm0.bin
 cp -w -n $[B9S] S:/firm1.bin
 
@@ -32,7 +43,7 @@ rm 0:/gm9/scripts/b9sinscript.gm9
 
 set SUCCESSMSG "Boot9Strap a bien etait installer."
 
-echo "Redemarrage votre 3ds"
+echo "Appuyez sur un bouton pour redemarrer votre console."
 
 # boot Luma3DS
 boot 0:/boot.firm 
