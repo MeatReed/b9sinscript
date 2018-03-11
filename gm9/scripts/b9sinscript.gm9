@@ -2,7 +2,7 @@
 # version recent: 20180103
 # auteur: MeatRedHD
 
-labelsel -o -s "Voulez-vous cree une backup total de votre console ?(Recommander)" backupmenu_*
+labelsel -o -s "Voulez-vous cree une backup total \n de votre console ?(Recommander)" backupmenu_*
 
 @backupmenu_Non
 goto resume_script
@@ -20,7 +20,7 @@ allow S:/firm1.bin
 allow 1:/
 
 # Verification des fichiers et dossiers
-set ERRORMSG "Le dossier bootstrap n'est pas dans votre carte sd"
+set ERRORMSG "Le dossier boot9strap \n n'est pas dans votre carte sd"
 find 0:/boot9strap/boot9stra*.firm B9S
 set ERRORMSG "Failed"
 sha $[B9S] $[B9S].sha
